@@ -1,0 +1,21 @@
+
+Test run settings:
+CI run        : False
+Testcase run  : False
+Testgroup run : False
+GUI mode      : False
+Time of run   : 2026-09-20_14.48.55.327732
+Time of sim   : 276 ms.
+
+
+Passing tests (1):
+test_lib.tb_passing.test (test_id: 1)
+
+Failing tests (0):
+
+Not run tests (0):
+
+
+Testcase: tb_passing.test
+
+

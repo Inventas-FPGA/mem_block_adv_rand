@@ -1,0 +1,4 @@
+v 4
+file / "/Users/mariuselvegard/dev/hdlregression/test/tb/tb_passing.vhd" "ff9fdcc7afafd21baa36eddbcbc266a6110b4c3f" "20260920124855.005":
+  entity tb_passing at 2( 19) + 0 on 11;
+  architecture test of tb_passing at 5( 65) + 4 on 12;

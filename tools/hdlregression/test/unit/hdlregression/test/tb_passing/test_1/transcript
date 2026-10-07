@@ -1,0 +1,4 @@
+ld: warning: object file (/Users/mariuselvegard/dev/hdlregression/test/unit/hdlregression/test/tb_passing/test_1/e~tb_passing-test.o) was built for newer 'macOS' version (28.0) than being linked (27.0)
+ld: warning: object file (/Users/mariuselvegard/dev/hdlregression/test/unit/hdlregression/library/test_lib/v08/tb_passing.o) was built for newer 'macOS' version (28.0) than being linked (27.0)
+/Users/mariuselvegard/dev/hdlregression/test/tb/tb_passing.vhd:10:13:@0ms:(report note): passing testcase
+simulation stopped @0ms

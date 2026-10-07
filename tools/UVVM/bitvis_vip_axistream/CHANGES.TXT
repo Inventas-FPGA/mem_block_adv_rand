@@ -1,0 +1,359 @@
+Bitvis VIP axistream (AXI4-Stream) - Overview on Versions and Changes
+==============================================================
+
+v6.1.4
+----------
+Released: 2026-02-14
+- Print data_routing parameter in corresponding VVC procedure.
+- Fixed inconsistency in axistream_expect-log messages in vvc_methods_pkg.vhd
+
+v6.1.3
+----------
+Released: 2025-11-28
+- Added missing deprecate() calls to some procedures.
+- Updated timeout alert message with more detail.
+- Replaced all -1 ns values with the constant C_UNDEFINED_TIME.
+- Increased max_wait_cycles default value to 1000.
+- Updated BFM procedures to only call check_clock_period_margin() once.
+- Removed extra sampling of rising_edge inside BFM procedures.
+
+v6.1.2
+----------
+Released: 2025-09-17
+- Added checks to make sure input arrays to axistream_transmit() and axistream_expect() have ascending range.
+
+v6.1.1
+----------
+Released: 2025-03-25
+- Updated methods for generating random values to control randomization seeds in axistream_bfm_pkg.
+- Moved the random configuration constants to bfm_common_pkg.
+
+v6.1.0
+----------
+Released: 2024-09-19
+- Removed old await_completion code from VVC.
+- Moved update_vvc_activity_register procedure to a common package for all VVCs.
+- Updated unwanted activity detection to ignore signal transitions from 'U', 'L' to/from '0', 'H' to/from '1'.
+
+v6.0.1
+----------
+Released: 2024-08-16
+- Fixed ready_default_value not having the initial value from the GC_AXISTREAM_BFM_CONFIG VVC generic.
+- Converted documentation to RST format.
+
+v6.0.0
+----------
+Released: 2024-07-03
+- Changed max constants used in BFM and VVC to be adjustable from adaptations_pkg.
+- Added an individual constant to configure the VVC max instance number from adaptations_pkg.
+- Decreased C_MAX_TUSER_BITS to 32 which allows GHDL to run without storage errors.
+- Added unwanted activity detection functionality to the VVC to give an alert if the DUT generates any unexpected bus activity.
+
+v5.0.0
+----------
+Released: 2024-03-08
+- Updated vvc_transaction_info to also trigger after the BFM call with updated data and the status COMPLETED.
+- Added missing scope to alert in set_global_vvc_transaction_info procedure.
+- Removed unnecessary constraining in set_global_vvc_transaction_info procedure.
+- Moved t_transaction_status type to types_pkg (common for all VVCs) and added COMPLETED.
+- Fixed incorrect logging of ID_PACKET_PAYLOAD and ID_PACKET_COMPLETE in axistream_receive.
+- Fixed compilation warning vcom-1090.
+- Use the function get_scope_for_log() to generate VVC scope.
+- Fixed data length typo in Axistream BFM- and VVC Quick Reference.
+- Added functionality for extended error mismatch message for data.
+- Increased C_MAX_TUSER_BITS to 64 in BFM. (allows for higher GC_USER_WIDTH)
+- Added executor_is_busy to interpreter_terminate_current_command() missing in VVC.
+
+v4.7.8
+----------
+Released: 2023-09-16
+- Updated BFM documentation on byte_endianness config.
+- Added a note to VVC QuickRef that cmd/result queue parameters in the VVC Configuration are
+  unused and will be removed in v3.0.
+- Changed back to full record mapping in AXI-Stream VVC to BFM call.
+- Replaced the default values in VVC generics related to the cmd/results queues with
+  the constants from adaptations_pkg.
+
+v4.7.7
+----------
+Released: 2023-03-21
+- Renamed C_SCOPE to C_SCOPE_BFM in BFM package.
+- In axistream_vvc: When calling a BFM procedure,
+  always use the non-record version to avoid fatal error: (SIGSEGV) Bad handle or reference 
+
+v4.7.6
+----------
+Released: 2023-03-10
+- Fixed wrong log msg_id used in BFM axistream_expect() procedure.
+- Changed transmit and expect "main" procedures to use t_slv_array instead of t_byte_array.
+  The former procedures using t_byte_array are now overloads of the ones using t_slv_array.
+
+v4.7.5
+----------
+Released: 2022-05-05
+- t_vvc_config, t_vvc_status, t_transaction_info and t_axistream_bfm_config record declaration formatting.
+- Fixed typo and wrong examples in VVC QuickRef.
+
+v4.7.4
+----------
+Released: 2021-05-26
+- Corrected message ID for check_value() in BFM.
+- Fixed incorrected VIP name in compile_bfm.do
+
+v4.7.3
+----------
+Released: 2021-04-08
+- Improved log message from axistream_expect_bytes() BFM procedure.
+- Removed commented log message in BFM procedures.
+
+v4.7.2
+----------
+Released: 2020-12-08
+- Fixed C_MULTIPLE_RANDOM for valid & ready low not working.
+- Added BFM configurations to control the probability of multiple random tvalid/tready low cycles
+  and the maximum random duration of tvalid/tready low deassertion.
+- Removed "addr" parameter from axistream_receive VVC method call in quick reference.
+
+v4.7.1
+----------
+Released: 2020-06-23
+- Added match_strictness to BFM config and use it in check/expect procedures. Also print HEX
+  or BIN value in BFM check/expect alert logs depending on what kind of error it is. Updated BFM QR.
+
+v4.7.0
+----------
+Released: 2020-05-19
+- Added shared_axistream_vvc_transaction_info information to quick reference.
+- Changed VVC activity methods parameters and default scope.
+- Updated quick reference Activity Watchdog section and BFM config record description.
+- Updated activity_watchdog_register_vvc_state() call with new t_activity parameter and 
+  other minor improvements.
+- Removed extra log in receive procedure when called from another BFM procedure.
+
+v4.6.1
+----------
+Released: 2020-04-20
+- Added reference to verbosity control in VVC QR.
+
+v4.6.0
+----------
+Released: 2020-03-30
+- Replaced use_provided_msg_id_panel and msg_id_panel for parent_msg_id_panel in
+  vvc_cmd_pkg. Added parent_msg_id_panel optional parameter to all VVC procedures
+  for future HVVC support.
+- Renamed Direct Transaction Transfer to transaction info.
+
+v4.5.1
+----------
+Released: 2020-02-16
+- Fixed wrong order of parameters in wait_on_bfm_exit call.
+- Added missing DTT commands.
+
+v4.5.0
+----------
+Released: 2020-01-24
+- Added bfm_sync to the BFM configuration record.
+- Added new BFM synchronisation methods with default SYNC_ON_CLOCK_ONLY.
+  The BFM will synchronise and start with falling edge, detect clock period, and
+  exit after a quarter clock period.
+- BFM config defaults setup_time, hold_time and clock_period are now 
+  default -1 ns, i.e. will require user configuration if BFM synchronisation is
+  used with other than SYNC_ON_CLOCK_ONLY.
+- VVC command insert_delay() will raise a TB_ERROR when called if the 
+  bfm_config.clock_period has not been set.  
+- Direct Transaction Transfer (DTT) is divided in a global trigger signal and 
+  shared variable with transfer related information.
+- Removed unused config elements id_for_bfm_wait & id_for_bfm_poll.
+- Only check for TLast in receive procedure when config check_packet_length is true.
+
+v4.4.0
+----------
+Released: 2019-12-04
+- Added transaction package.
+- Updated VVC src and quick reference with activity watchdog name changes.
+- Added a set of new features, see UVVM VVC Framework Essential Mechanisms document.
+
+v4.3.0
+----------
+Released: 2019-11-21
+- Added activity watchdog to VVC.
+- Added scoreboard to VVC.
+- Updated LICENSE.TXT
+
+v4.2.0
+----------
+Released: 2019-09-02
+- Fixed bug in BFM receive procedure where it could receive more bytes
+  than expected in the last word.
+- Allowed non-normalized data arrays to be used in the transmit, receive
+  and expect VVC & BFM procedures.
+- Fixed deassertion of tready signal when config ready_default_value=1.
+- Avoid executing commands in the VVC when GC_VVC_IS_MASTER is wrongly configured.
+- Made BFM receive procedure always timeout at max_wait_cycles.
+- BFM receive procedure now samples the data at the rising edge of the clock.
+- Fixed tready signal being asserted before tvalid was asserted when using
+  config ready_default_value=0.
+- Changed back to using the record BFM calls from the VVC as the bug from Questa
+  has been fixed.
+- Added a feature to deassert tvalid once or multiple random times from the master
+  using the config record.
+- Added a feature to deassert tready multiple random times from the slave using
+  the config record.
+- Fixed VVC receive procedure returning the data at the end of the byte_array
+  when config byte_endianness was FIRST_BYTE_RIGHT.
+- Updated documentation.
+
+v4.1.0
+----------
+Released: 2019-06-06
+- Added optional scope to all CDMs.
+- Updated documentation.
+
+v4.0.3
+----------
+Released: 2018-12-03
+- Updated documentation
+
+v4.0.2
+----------
+Released: 2018-08-30
+- Added VVC context file
+- Updated documentation
+- Compile script changed according to new structure
+
+v4.0.1
+----------
+Released: 2018-04-09
+- Added configurable byte endianness.
+- Added multicast information to the VVC quick reference.
+- Fixed a bug where the fixed cycles waited error counter was
+  accumulated in the BFM transmit_bytes procedure.
+
+v4.0.0
+----------
+Released: 2017-11-16
+- All t_byte_array VVC and BFM procedure calls are renamed with suffix
+  _bytes to fix ambiguous issues.
+- Updated QR PDFs with t_byte_array related information.
+
+v3.1.0
+----------
+Released: 2017-10-16
+- Added compile library name to compile_order.txt for use in compile_src.do
+  script and GHDL compile scripts.
+- Changed compile_src.do script to use compile_order.txt for compilation.
+- Reduced terminal output from Modelsim when running compile script.
+- Added support for input argument number 2 to compile_src.do script for
+  specifying output directory.
+- Added clock_period_margin, clock_margin_severity, setup_time and hold_time
+  to BFM configuration record.
+- Added clock period checking and configurable setup and hold times for
+  BFM generated signals.
+- init_axistream_if_signals() function will now set tready to the default value
+  set in the BFM configuration record.
+- Added support for t_slv_array and slv in VVC and BFM calls.
+- Fixed bug that made insert_delay() override inter_bfm_delay in VVC executor.
+- Updated VVC and BFM quick reference PDFs.
+
+v3.0.5
+----------
+Released: 2017-06-08
+- Added more sanity checks
+- Changed variable name in compile script to fix error with Aldec Active-HDL
+- Added compile order file to script folder
+
+v3.0.4
+----------
+Released: 2017-05-16
+- Updated handling of TKEEP in BFM
+
+v3.0.3
+----------
+Released: 2017-04-28
+- Updated formatting in documentation
+
+v3.0.2
+----------
+Released: 2017-04-04
+- Updated the BFM init functions to fix compile error in GHDL
+
+
+v3.0.1
+----------
+Released: 2017-03-27
+- In axistream_vvc: When calling a BFM procedure, always use the non-record version to avoid fatal error in Questa: (SIGSEGV) Bad handle or reference
+
+
+v3.0.0
+----------
+Released: 2017-03-16
+- Updated documentation
+- Added support for TDEST, TID, TSTRB.
+  - Required changes by user :
+    - When declaring the axistream interface signal, these new signals must be contrained, for example:
+
+        signal axistream_if_m : t_axistream_if(tdata(GC_DATA_WIDTH -1 downto 0),
+                                               tkeep((GC_DATA_WIDTH/8)-1 downto 0),
+                                               tuser(GC_USER_WIDTH -1 downto 0),
+                                               tstrb(GC_STRB_WIDTH-1 downto 0),   -- new!
+                                               tid  (GC_TID_WIDTH-1 downto 0),    -- new!
+                                               tdest(C_TDEST_WIDTH-1 downto 0)    -- new!
+                                              );
+
+    - Calls to init_axistream_if_signals() must be updated, if any.
+
+
+v2.0.3
+----------
+Released: 2017-02-13
+- Applied minor bugfixes and updated documentation for v2.0.x
+
+
+v2.0.2
+----------
+Released: 2017-02-01
+- Applied minor bugfixes after beta testing
+
+
+v2.0.1
+----------
+Released: 2017-01-27
+
+- Changed order of BFM-check methods. "alert_level" moved to first optional parameter.
+- Changed ID_BFM to ID_INSERTED_DELAY in INSERT_DELAY method
+- Added AWAIT_ANY_COMPLETION.
+- Due to updates in store_result and fetch_result() in uvvm_vvc_framework:
+-  - added definition of t_vvc_result, t_vvc_result_queue_element, t_vvc_response, shared_vvc_response
+-  - updated call to store_result()
+- Removed the use of INSERT_DELAY_IN_TIME. Merged with INSERT_DELAY.
+- Bugfix in AxiStream BFM : The transmit procedure did not sample tready at the rising edge of clock.
+
+
+VVC changes
+----------
+- Renamed transaction_info_for_waveview to transaction_info
+
+----------------------------------------------------------------------
+v1.0.2
+----------
+Released: 2016-10-28
+
+VVC changes
+----------
+- transaction_for_waveview now shows NO_OPERATION after a transaction has been completed
+
+v1.0.1
+----------
+Released: 2016-09-13
+
+- Fixed error in compilation scripts
+- Changed type t_slv8_array so that it is now an
+  alias of t_byte_array from UVVM-Util.
+- Updated header information in some files.
+
+
+v1.0.0
+----------
+Released: 2016-08-30
+
+Initial version of axistream VIP
